@@ -44,10 +44,14 @@ T = TypeVar("T", bound=Type[ShellObject])
 
 def shellObject(cls: T) -> T:
     # FIXME: mypy does not seem to understand __globals__ here
-    try:
+    if hasattr(cls, "shellOpen"):
+#        try:
         cls.shellOpen.__globals__["WorkspaceObject"] = cls  # type: ignore
         cls.shellOpen.__globals__["ShellObject"] = cls  # type: ignore
-    except AttributeError:
+#        except AttributeError:
+#            cls.open.__globals__["WorkspaceObject"] = cls  # type: ignore
+#            cls.open.__globals__["ShellObject"] = cls  # type: ignore
+    else:
         cls.open.__globals__["WorkspaceObject"] = cls  # type: ignore
         cls.open.__globals__["ShellObject"] = cls  # type: ignore
     return cls

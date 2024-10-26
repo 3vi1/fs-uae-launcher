@@ -10,7 +10,11 @@ class Option(BaseOption):
     @staticmethod
     # FIXME: Remove Any
     def get(name: str) -> Dict[str, Any]:
-        return options[name]
+        if name not in options:
+            print(f"launcher.option:  Unknown option: {name}")
+        else:
+            return options[name]
+        return None
 
 
 # noinspection PyPep8Naming

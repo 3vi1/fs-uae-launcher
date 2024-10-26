@@ -58,4 +58,4 @@ class LauncherSettings2:
         self.set("launcher_window_y", str(windowState.y))
         self.set("launcher_window_width", str(windowState.width))
         self.set("launcher_window_height", str(windowState.height))
-        self.set("launcher_window_maximized", str(int(windowState.maximized)))
+        self.set("launcher_window_maximized", str(windowState.maximized != 0))

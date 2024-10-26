@@ -333,9 +333,12 @@ class InputPortTypeChoice(fsui.Choice):
         pass
 
     def update_index(self, value: str):
-        try:
-            index = self._choice_values.index(value)
-        except ValueError:
+        if value != '':
+            try:
+                index = self._choice_values.index(value)
+            except ValueError:
+                index = 0
+        else:
             index = 0
         with self.changed.inhibit:
             self.setIndex(index)
@@ -346,7 +349,8 @@ class InputPortTypeChoice(fsui.Choice):
         except KeyError:
             self._choice_values = ["0"]
             self._choice_labels = ["N/A"]
-        else:
+
+        if(option is not None):
             choices = option["values"]
             self._choice_values = [x[0] for x in choices]
             self._choice_labels = [x[1] for x in choices]
@@ -360,6 +364,9 @@ class InputPortTypeChoice(fsui.Choice):
                     default_label = "??? (*)"
                 self._choice_values.insert(0, "")
                 self._choice_labels.insert(0, default_label)
+        else:
+            self._choice_values = ["0"]
+            self._choice_labels = ["N/A"]
         with self.changed.inhibit:
             self.clear()
             for label in self._choice_labels:

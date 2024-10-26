@@ -15,7 +15,7 @@ class Application(FSBCApplication):
         pass
 
     def run(self) -> None:
-        self.qapplication.exec_()
+        self.qapplication.exec()
         self.stop()
 
     def set_icon(self, icon: Icon) -> None:

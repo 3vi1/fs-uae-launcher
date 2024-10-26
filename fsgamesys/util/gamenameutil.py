@@ -467,10 +467,10 @@ class GameNameUtil(object):
 
         terms: Set[str] = set()
         for word in new_words:
-            try:
+            if word in normalize_words:
                 add_words = normalize_words[word]
                 print(" - replacement", word, "=>", add_words)
-            except:
+            else:
                 add_words = [word]
 
             for add_word in add_words:

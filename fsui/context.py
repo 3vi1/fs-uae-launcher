@@ -20,9 +20,9 @@ def get_window(widget: Widget) -> TopLevelWidget:
     # import traceback
     # traceback.print_stack()
     # print("get_window", widget, widget.__dict__)
-    try:
+    if hasattr(widget, "internalCachedWindow"):
         return widget.internalCachedWindow
-    except AttributeError:
+    else:
         # print("THEME - GET WINDOW", widget)
         # print(f" - {widget}")
         w = widget

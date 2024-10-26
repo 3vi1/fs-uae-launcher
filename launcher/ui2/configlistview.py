@@ -275,9 +275,9 @@ class ConfigListView(VerticalItemView):
 
         database = Database.get_instance()
 
-        try:
+        if len(LauncherSettings.get("database_show_games")) > 0:
             have = int(LauncherSettings.get("database_show_games"))
-        except ValueError:
+        else:
             # default is show all downloadable and locally available games
             have = 1
         items = database.find_games_new(

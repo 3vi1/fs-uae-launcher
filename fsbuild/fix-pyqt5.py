@@ -3,7 +3,7 @@ import os
 import shutil
 import sys
 
-from PyQt5.QtCore import QLibraryInfo
+from PyQt6.QtCore import QLibraryInfo
 
 
 def main() -> None:

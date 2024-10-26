@@ -20,10 +20,10 @@ error_set = set()
 @lru_cache()
 def get_cache_zip_for_sha1(sha1: str) -> Optional[ZipFile]:
     zip_path = os.path.join(FSGSDirectories.images_dir(), sha1[:2] + ".zip")
-    try:
+    if os.path.exists(zip_path):
         return ZipFile(zip_path, "r")
-    except Exception:
-        return None
+
+    return None
 
 
 def get_file_for_sha1_cached(sha1: str, size_arg: str, cache_ext: str) -> str:

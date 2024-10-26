@@ -25,11 +25,9 @@ class Listener(object):
         elif signal == "setting":
             # FIXME: temporary hack for legacy code
             listener = listener.on_setting
-        try:
-            # FIXME: temporary hack for legacy code
-            listener = getattr(listener, "on_" + signal + "_signal")
-        except AttributeError:
-            pass
+        else:
+            if hasattr(listener, "on_" + signal + "_signal"):
+                listener = getattr(listener, "on_" + signal + "_signal")
 
         if hasattr(listener, "__self__") and hasattr(listener, "__func__"):
             self.instance = ref(listener.__self__)

@@ -57,9 +57,9 @@ class FSGSDirectories(object):
     @lru_cache()
     def portable_dir(cls, name: str) -> Optional[str]:
         config = cls.portable_config()
-        try:
+        if name in config:
             path = config[name]
-        except KeyError:
+        else:
             return None
         return os.path.join(cls.get_base_dir(), path)
 

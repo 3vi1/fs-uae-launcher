@@ -35,6 +35,8 @@ class VolumeButtonBase:
 
     def on_setting(self, key: str, value: str, initial: bool = False) -> None:
         if key == "volume":
+            if value == '':
+                value = "100"
             try:
                 self.volume = int(value)
             except ValueError:

@@ -89,11 +89,12 @@ window_registry = {}  # type: Dict[str, Window]
 
 def simple_window_cache(window_class, window_key, window=None, parent=None):
     try:
-        win = window_registry[window_key]
+        if window_key in window_registry:
+            win = window_registry[window_key]
+            win.raise_and_activate()
     except LookupError:
         pass
     else:
-        win.raise_and_activate()
         return
     win = window_class(None)
 
@@ -236,7 +237,7 @@ def wsopen(name: str, args=None, *, window=None, parent=None):
         return wsopen_launcher(**kwargs)
 
     # elif name == SYSTEM_PREFS:
-    #     return wsopen_prefs(**kwargs)
+    #    return wsopen_prefs(**kwargs)
     # elif name == SYSTEM_PREFS_ADVANCED:
     #     return wsopen_prefs_window(name, parent=parent)
     # elif name == SYSTEM_PREFS_APPEARANCE:

@@ -11,7 +11,7 @@ from fsgamesys.options.option import Option
 #     from fsui.qt.pyside2 import *
 # else:
 #     from fsui.qt.pyqt5 import *
-from fsui.qt.pyqt5 import *
+from fsui.qt.pyqt6 import *
 
 # from fsui.qt.pyqt5 import (
 #     QAbstractListModel,
@@ -106,7 +106,7 @@ def init_qt() -> QApplication:
     # Should not be necessary with Qt 5.2.x:
     # fix_qt_for_maverick()
 
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+    #QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 
     fstd.desktop.set_open_url_in_browser_function(open_url_in_browser)
     qapplication = QtBaseApplication(sys.argv)

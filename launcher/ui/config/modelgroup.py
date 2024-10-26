@@ -274,9 +274,12 @@ class ModelChoice(fsui.Choice):
         self.set_enabled(self._choice_labels != ["N/A"])
 
     def update_index(self, value):
-        try:
-            index = self._choice_values.index(value)
-        except ValueError:
+        if value in self._choice_values:
+            try:
+                index = self._choice_values.index(value)
+            except ValueError:
+                index = 0
+        else:
             index = 0
         with self.changed.inhibit:
             self.set_index(index)
@@ -287,10 +290,15 @@ class ModelChoice(fsui.Choice):
         except KeyError:
             self._choice_values = ["0"]
             self._choice_labels = ["N/A"]
+
+        if option == None:
+            self._choice_values = ["0"]
+            self._choice_labels = ["N/A"]
         else:
             choices = option["values"]
             self._choice_values = [x[0] for x in choices]
             self._choice_labels = [x[1] for x in choices]
+        
         with self.changed.inhibit:
             self.clear()
             for label in self._choice_labels:

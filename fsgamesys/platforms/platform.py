@@ -16,9 +16,9 @@ class PlatformHandler:
     @classmethod
     def get_platform_class(cls, platform_id):
         platform_id = platform_id.lower()
-        try:
+        if platform_id in platforms:
             return platforms[platform_id]
-        except KeyError:
+        else:
             return UnsupportedPlatform
 
     @classmethod

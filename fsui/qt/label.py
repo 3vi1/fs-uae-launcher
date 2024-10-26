@@ -27,13 +27,14 @@ class Label(PlainLabel):
     ) -> None:
         super().__init__(parent, label)
 
-        self.qLabel.setTextFormat(Qt.RichText)
+        self.qLabel.setTextFormat(Qt.TextFormat.RichText)
         # self.setTextInteractionFlags(fsui.qt.Qt.TextBrowserInteraction)
         if selectable:
             self.qLabel.setTextInteractionFlags(
                 cast(
-                    Qt.TextInteractionFlags,
-                    Qt.TextSelectableByMouse | Qt.LinksAccessibleByMouse,
+#                    Qt.TextInteractionFlags,
+                    Qt.TextInteractionFlag,
+                    Qt.TextInteractionFlag.TextSelectableByMouse | Qt.TextInteractionFlag.LinksAccessibleByMouse,
                 )
             )
         self.qLabel.setOpenExternalLinks(True)

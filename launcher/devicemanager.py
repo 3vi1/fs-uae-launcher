@@ -382,7 +382,10 @@ class DeviceManager:
                     option = Option.get(
                         "{}_port_{}_type".format(platform, port)
                     )
-                    mode = option["default"]
+                    if option != None:
+                        mode = option["default"]
+                    else:
+                        mode = ""
                 except KeyError:
                     # FIXME: How to handle?
                     mode = ""

@@ -39,9 +39,9 @@ def memoize(func):
             # cannot create key -- for instance, passing a list as an argument.
             # FIXME: Log warning here
             return func(*args, **kwargs)
-        try:
+        if key in memoize_data:
             return memoize_data[key]
-        except KeyError:
+        else:
             value = func(*args, **kwargs)
             try:
                 memoize_data[key] = value

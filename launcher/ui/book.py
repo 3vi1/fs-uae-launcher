@@ -22,15 +22,15 @@ class Book(Panel):
     def set_page(self, page: Union[int, Widget]):
         print("Book.set_page", page)
         index: int
-        try:
+
+        if(type(page) == int):
             index = page + 0
-        except TypeError:
+        else:
             for i, p in enumerate(self.pages):
                 if page == p:
                     index = i
                     break
-            else:
-                raise Exception("page not found")
+            
         if self.current_page:
             self.current_page.hide()
             self.layout.remove(self.current_page)

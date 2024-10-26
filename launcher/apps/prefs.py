@@ -60,4 +60,4 @@ def app_main():
 
     wsopen("SYS:Prefs/WHDLoad")
 
-    qapplication.exec_()
+    qapplication.exec()

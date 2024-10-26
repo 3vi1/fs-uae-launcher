@@ -5,7 +5,8 @@ from fsui.qt.core import QTimer
 from fsui.qt.qparent import QOptionalParent
 from fsui.qt.qt import init_qt
 from fsui.qt.toplevelwidget import TopLevelWidget
-from fsui.qt.widgets import QDesktopWidget, QMessageBox
+#from fsui.qt.widgets import QDesktopWidget, QMessageBox
+from fsui.qt.widgets import QMessageBox
 from fswidgets.types import Size
 
 

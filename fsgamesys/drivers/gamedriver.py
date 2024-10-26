@@ -429,14 +429,15 @@ class GameDriver:
             from fsui.qt import init_qt
 
             qapplication = init_qt()
-            desktop = qapplication.desktop()
+            desktop = qapplication.screens()
         except AttributeError:
             # no QApplication, probably not running via QT
             # FIXME: log warning
             pass
         else:
-            for i in range(desktop.screenCount()):
-                geometry = desktop.screenGeometry(i)
+            for i in range(len(desktop)):
+                #geometry = desktop.screenGeometry(i)
+                geometry = desktop[i].geometry()
                 screens.append([geometry.x(), i, geometry])
         return screens
 

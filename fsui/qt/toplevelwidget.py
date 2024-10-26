@@ -6,7 +6,9 @@ from weakref import ref
 from fscore.deprecated import deprecated
 from fsui.common.layout import Layout
 from fsui.qt.icon import Icon
-from fsui.qt.qt import QDesktopWidget, QSignal
+#from fsui.qt.qt import QDesktopWidget, QSignal
+from PyQt6 import QtGui
+from fsui.qt.qt import QSignal
 from fswidgets.qt.core import QEvent, QObject, Qt
 from fswidgets.qt.gui import QKeyEvent
 from fswidgets.qt.widgets import QWidget
@@ -131,14 +133,15 @@ class TopLevelWidget(Widget):
         return self.__maximizable
 
     def isMaximized(self) -> bool:
-        return int(self.qWidget.windowState()) & Qt.WindowMaximized != 0
+        return (self.qWidget.windowState() & Qt.WindowState.WindowMaximized)
+#        return int(self.qWidget.windowState()) & Qt.WindowMaximized != 0
 
     def maximize(self, maximize: bool = True) -> None:
         """The maximize parameter is deprecated."""
         self.setMaximized(maximize)
 
     def minimize(self) -> None:
-        self.qwidget.setWindowState(Qt.WindowMinimized)
+        self.qwidget.setWindowState(Qt.WindowState.WindowMinimized)
 
     def onClose(self) -> None:
         pass
@@ -397,7 +400,7 @@ class TopLevelWidget(Widget):
 
     def center_on_screen(self) -> None:
         frame_rect = self.qWidget.frameGeometry()
-        frame_rect.moveCenter(QDesktopWidget().availableGeometry().center())
+        frame_rect.moveCenter(QtGui.QGuiApplication.primaryScreen().availableGeometry().center())
         self.qWidget.move(frame_rect.topLeft())
 
     def close(self) -> None:
@@ -425,7 +428,7 @@ class TopLevelWidget(Widget):
         obj = a0
         event = a1
         eventType = event.type()
-        if eventType == QEvent.Close:
+        if eventType == QEvent.Type.Close:
             assert obj == self._qwidget
             # print(f"DialogWrapper.closeEvent self={self})")
             # super().closeEvent(event)
@@ -437,7 +440,7 @@ class TopLevelWidget(Widget):
                 internalWindowsSet.remove(self)
                 self.onClose()
                 self.on_close()
-        elif eventType == QEvent.KeyPress:
+        elif eventType == QEvent.Type.KeyPress:
             keyEvent = cast(QKeyEvent, event)
             mod = int(keyEvent.modifiers())
             if self.__handleShortcut(
@@ -591,7 +594,7 @@ class TopLevelWidget(Widget):
             print("size after showMaximized", self.getSize())
         else:
             # self.restore_margins()
-            self.qwidget.setWindowState(Qt.WindowNoState)
+            self.qwidget.setWindowState(Qt.WindowState.WindowNoState)
 
     def set_size_from_layout(self, layout: Layout) -> None:
         size = layout.get_min_size()

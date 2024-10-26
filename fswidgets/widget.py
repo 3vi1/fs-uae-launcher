@@ -125,22 +125,22 @@ class Widget(QObject):
         obj = a0
         event = a1
         event_type = event.type()
-        if event_type == QEvent.Resize:
+        if event_type == QEvent.Type.Resize:
             if obj == self.qwidget:
                 self.on_resize()
-        elif event_type == QEvent.Show:
+        elif event_type == QEvent.Type.Show:
             if obj == self.qwidget:
                 self.on_show()
-        elif event_type == QEvent.Timer:
+        elif event_type == QEvent.Type.Timer:
             timerEvent = cast(QTimerEvent, event)
             if timerEvent.timerId() == self.__timer_id:
-                # print("-> on_timer")
+                print("-> on_timer")
                 self.on_timer()
                 return True
             # else:
             #     print("other timer event")
-        elif event_type == QEvent.WindowActivate:
-            # print("activated", obj)
+        elif event_type == QEvent.Type.WindowActivate:
+            print("activated", obj)
             if obj == self.qwidget:
                 if not self.__window_focused:
                     # Important to update this before emitting the signal.
@@ -148,9 +148,9 @@ class Widget(QObject):
                     # self.window_focus_changed.emit()
                     self.onWindowFocusChanged()
                 # return True
-        elif event_type == QEvent.WindowDeactivate:
+        elif event_type == QEvent.Type.WindowDeactivate:
             if obj == self.qwidget:
-                # print("deactivateEvent", obj)
+                print("deactivateEvent", obj)
                 if self.__window_focused:
                     # Important to update this before emitting the signal.
                     self.__window_focused = False
@@ -178,6 +178,8 @@ class Widget(QObject):
         Window). This simplifies type checking. See also hasParent method."""
         if self._parent is None:
             raise NoParentError("Widget has no parent")
+#            print("Widget has no parent")
+#            return None
         # noinspection PyCallingNonCallable
         return self._parent()
 
@@ -203,7 +205,8 @@ class Widget(QObject):
 
     def getQWidget(self) -> QWidget:
         if self.__qwidget is None:
-            raise RuntimeError("Widget does not have qwidget")
+            print("Widget does not have qwidget")
+#            raise RuntimeError("Widget does not have qwidget")
         return self.__qwidget
 
     def getRealPosition(self) -> Point:
@@ -339,30 +342,31 @@ class Widget(QObject):
 
     def setMoveCursor(self) -> None:
         # FIXME: self.setCursor(Cursor.MOVE)?
-        self.qwidget.setCursor(Qt.SizeAllCursor)
+        self.qwidget.setCursor(Qt.CursorShape.SizeAllCursor)
 
     def setNormalCursor(self) -> None:
         # FIXME: self.setCursor(Cursor.DEFAULT)?
-        self.qwidget.setCursor(Qt.ArrowCursor)
+        self.qwidget.setCursor(Qt.CursorShape.ArrowCursor)
 
     def setPointingHandCursor(self) -> None:
-        self.qwidget.setCursor(Qt.PointingHandCursor)
+        self.qwidget.setCursor(Qt.CursorShape.PointingHandCursor)
 
     def setPosition(self, position: Point) -> None:
         self.qwidget.move(position[0], position[1])
 
     def setPositionAndSize(self, position: Point, size: Size) -> None:
-        self.qwidget.setGeometry(position[0], position[1], size[0], size[1])
+        self.qwidget.setGeometry(int(position[0]), int(position[1]), size[0], size[1])
         # return self
 
     def setQWidget(self, qwidget: QWidget) -> None:
         self.__qwidget = qwidget
         self.qwidget.installEventFilter(self)
+        ##self.qwidget.installEventFilter(qwidget)
         self.qwidget.destroyed.connect(self.__on_destroyed)  # type: ignore
 
     def setResizeCursor(self) -> None:
         # FIXME: self.setCursor(Cursor.RESIZE)?
-        self.qwidget.setCursor(Qt.SizeFDiagCursor)
+        self.qwidget.setCursor(Qt.CursorShape.SizeFDiagCursor)
 
     def setSize(self, size: Size) -> None:
         self.qwidget.resize(size[0], size[1])
@@ -448,7 +452,7 @@ class Widget(QObject):
         global_pos = widget.mapToGlobal(QPoint(pos[0], pos[1]))
         menu.setParent(self)
         if blocking:
-            menu.qmenu.exec_(global_pos)
+            menu.qmenu.exec(global_pos)
         else:
             menu.qmenu.popup(global_pos)
 

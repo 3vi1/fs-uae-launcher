@@ -70,9 +70,9 @@ class RatingChoice(Choice):
 
     def on_variant_rating_config(self, event: ConfigEvent) -> None:
         with self.changed.inhibit:
-            try:
+            if(event.value != ''):
                 rating = int(event.value)
-            except ValueError:
+            else:
                 rating = 0
             self.set_index(self.rating_to_index(rating))
 

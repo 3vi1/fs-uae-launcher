@@ -30,7 +30,7 @@ class DrawingContext(object):
             self.qpainter.eraseRect(rect)
 
     def setAntialiasing(self, antiAliasing: bool) -> None:
-        self.qpainter.setRenderHint(QPainter.Antialiasing, antiAliasing)
+        self.qpainter.setRenderHint(QPainter.RenderHint.Antialiasing, antiAliasing)
 
     def get_font(self) -> Font:
         return Font(qFont=self.qpainter.font())
@@ -42,14 +42,14 @@ class DrawingContext(object):
         # self.qpainter.drawText(QPoint(x, y), text)
         self.qpainter.setPen(QPen(self.text_color))
         self.qpainter.drawText(
-            x, y, 10000, 1000, Qt.AlignLeft | Qt.AlignTop, text
+            x, y, 10000, 1000, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop, text
         )
 
     def measure_text(self, text: str) -> Tuple[int, int]:
         # return self.dc.GetTextExtent(text)
         # return (10, 10)
         rect = self.qpainter.boundingRect(
-            0, 0, 10000, 1000, Qt.AlignLeft | Qt.AlignTop, text
+            0, 0, 10000, 1000, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop, text
         )
         return rect.width(), rect.height()
 

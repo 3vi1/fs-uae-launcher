@@ -29,9 +29,10 @@ class ConfigDispatch:
         self.parent = None
 
     def update(self, event: ConfigEvent) -> None:
-        try:
-            function = self.mapping[event.key]
-        except LookupError:
-            pass
-        else:
-            function(event)
+        if event.key in self.mapping:
+            try:
+                function = self.mapping[event.key]
+            except LookupError:
+                pass
+            else:
+                function(event)

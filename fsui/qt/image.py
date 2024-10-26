@@ -109,11 +109,11 @@ class Image:
         if size == self.size:
             return
         if filter_:
-            q = Qt.SmoothTransformation
+            q = Qt.TransformationMode.SmoothTransformation
         else:
-            q = Qt.FastTransformation
+            q = Qt.TransformationMode.FastTransformation
         self.qimage = self.qimage.scaled(
-            size[0], size[1], Qt.IgnoreAspectRatio, q
+            size[0], size[1], Qt.AspectRatioMode.IgnoreAspectRatio, q
         )
         # self._bitmap = None
 

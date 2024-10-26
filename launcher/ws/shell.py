@@ -222,9 +222,10 @@ def shell_split(path: str) -> Tuple[str, str]:
     """
     if not path:
         return "", ""
-    try:
+    
+    if "/" in path:
         head, tail = path.rsplit("/", 1)
-    except ValueError:
+    else:
         try:
             head, tail = path.split(":", 1)
             if tail:

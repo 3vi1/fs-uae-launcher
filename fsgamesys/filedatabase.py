@@ -242,13 +242,14 @@ class FileDatabase(BaseDatabase):
     ) -> File:
         cursor = self.internal_cursor()
         if sha1:
-            # First we try to find the file from the temporary static
-            # file map, in case we've been told about files from plugins or
-            # archives.
-            try:
-                return self.static_files[sha1]
-            except KeyError:
-                pass
+            if sha1 in self.static_files:
+                # First we try to find the file from the temporary static
+                # file map, in case we've been told about files from plugins or
+                # archives.
+                try:
+                    return self.static_files[sha1]
+                except KeyError:
+                    pass
             cursor.execute(
                 "SELECT id, path, sha1, mtime, size, parent "
                 "FROM file WHERE sha1 = ? LIMIT 1",

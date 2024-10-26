@@ -8,7 +8,7 @@ from fsui.qt import QCoreApplication, QEvent, QObject
 
 class CustomEvent(QEvent):
     def __init__(self) -> None:
-        QEvent.__init__(self, QEvent.User)
+        QEvent.__init__(self, QEvent.Type.User)
 
 
 class EventHandler(QObject):
@@ -20,6 +20,8 @@ class EventHandler(QObject):
 
     def customEvent(self, a0: QEvent) -> None:
         while True:
+            if self.queue.empty():
+                break
             try:
                 function, args, kwargs = self.queue.get_nowait()
                 print(function, args, kwargs)

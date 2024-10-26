@@ -201,9 +201,10 @@ class SettingsProvider:
 
     def rewrite_key(self, key):
         # FIXME: Should be moved to subclass
-        try:
+        #try:
+        if key in key_replacement_table:
             return key_replacement_table[key]
-        except KeyError:
+        else:
             return key
 
     def save(self, settings, extra=None):

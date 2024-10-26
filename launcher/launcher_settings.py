@@ -40,7 +40,7 @@ class LauncherSettings(object):
         "database_password": "",
         "database_server": "",
         Option.DATABASE_SHOW_ADULT: "",
-        Option.DATABASE_SHOW_GAMES: "",
+        Option.DATABASE_SHOW_GAMES: "1",
         Option.DATABASE_SHOW_UNPUBLISHED: "",
         "database_username": "",
         "device_id": "",

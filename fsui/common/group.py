@@ -1,6 +1,7 @@
 import weakref
 
-from PyQt5.QtWidgets import QWidget
+#from PyQt5.QtWidgets import QWidget
+from PyQt6.QtWidgets import QWidget
 
 from fscore.deprecated import deprecated
 from fsui.qt import QObject
